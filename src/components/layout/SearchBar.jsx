@@ -3,7 +3,30 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+
+function useHighlightedParts(text, term) {
+  return useMemo(() => {
+    const cleanTerm = term.trim();
+    if (!cleanTerm) return [text];
+    const escaped = cleanTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return text.split(new RegExp(`(${escaped})`, "gi"));
+  }, [text, term]);
+}
+
+function HighlightedText({ text, term }) {
+  const parts = useHighlightedParts(text, term);
+
+  return parts.map((part, i) =>
+    part.toLowerCase() === term.trim().toLowerCase() ? (
+      <mark key={i} className="bg-accent/30 text-ink">
+        {part}
+      </mark>
+    ) : (
+      <span key={i}>{part}</span>
+    ),
+  );
+}
 
 export default function SearchBar() {
   const [query, setQuery] = useState("");
@@ -20,29 +43,24 @@ export default function SearchBar() {
       return;
     }
 
-    const controller = new AbortController();
+    let stale = false;
     const timer = setTimeout(async () => {
       setIsLoading(true);
       try {
-        const res = await fetch(
-          `/api/recherche?q=${encodeURIComponent(term)}`,
-          {
-            signal: controller.signal,
-          },
-        );
+        const res = await fetch(`/api/recherche?q=${encodeURIComponent(term)}`);
         const data = await res.json();
+        if (stale) return;
         setResults(data.results ?? []);
         setIsOpen(true);
       } catch {
-        /* requête annulée : on ignore */
       } finally {
-        setIsLoading(false);
+        if (!stale) setIsLoading(false);
       }
     }, 300);
 
     return () => {
+      stale = true;
       clearTimeout(timer);
-      controller.abort();
     };
   }, [query]);
 
@@ -58,8 +76,14 @@ export default function SearchBar() {
   const submit = (event) => {
     event.preventDefault();
     if (!query.trim()) return;
-    setIsOpen(false);
     router.push(`/oeuvres?q=${encodeURIComponent(query.trim())}`);
+    setIsOpen(false);
+    setQuery("");
+  };
+
+  const selectResult = () => {
+    setIsOpen(false);
+    setQuery("");
   };
 
   return (
@@ -98,7 +122,7 @@ export default function SearchBar() {
               >
                 <Link
                   href={`/oeuvres/${artwork.id}`}
-                  onClick={() => setIsOpen(false)}
+                  onClick={selectResult}
                   className="flex items-center gap-3 px-3 py-3 transition-colors hover:bg-paper-2"
                 >
                   <span className="relative h-12 w-12 shrink-0 overflow-hidden bg-paper-2">
@@ -114,10 +138,10 @@ export default function SearchBar() {
                   </span>
                   <span className="min-w-0">
                     <span className="block truncate font-display text-base leading-tight">
-                      {artwork.title}
+                      <HighlightedText text={artwork.title} term={query} />
                     </span>
                     <span className="cartel block truncate text-stone">
-                      {artwork.artist}
+                      <HighlightedText text={artwork.artist} term={query} />
                     </span>
                   </span>
                 </Link>
@@ -128,7 +152,7 @@ export default function SearchBar() {
           {results.length > 0 && (
             <Link
               href={`/oeuvres?q=${encodeURIComponent(query.trim())}`}
-              onClick={() => setIsOpen(false)}
+              onClick={selectResult}
               className="cartel block bg-ink px-4 py-3 text-paper"
             >
               Voir tous les résultats →

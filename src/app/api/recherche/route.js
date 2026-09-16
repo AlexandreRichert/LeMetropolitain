@@ -10,7 +10,6 @@ export async function GET(request) {
 
   const matches = await searchArtworks({ q: query })
 
-  // On n'expose que ce dont l'autocomplete a besoin.
   const results = matches.slice(0, 6).map(({ id, title, artist, image }) => ({ id, title, artist, image }))
 
   return NextResponse.json(
