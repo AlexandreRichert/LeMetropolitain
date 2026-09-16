@@ -1,5 +1,5 @@
-import Link from "next/link";
 import Container from "@/components/ui/Container";
+import Link from "@/components/ui/Link";
 import { NAV, SITE } from "@/lib/constants";
 
 export default function Footer() {

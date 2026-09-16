@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Link from "@/components/ui/Link";
 import { NAV } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
