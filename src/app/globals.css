@@ -1,0 +1,112 @@
+@import 'tailwindcss';
+
+/* =============================================================
+   DESIGN SYSTEM — source de vérité unique.
+   Tailwind v4 génère les utilitaires directement depuis @theme :
+   --color-ink        -> bg-ink / text-ink / border-ink
+   --font-display     -> font-display
+   --text-hero        -> text-hero (+ line-height / letter-spacing)
+   --ease-out-expo    -> ease-out-expo
+   Aucune valeur "en dur" ne doit apparaître dans les composants.
+   ============================================================= */
+
+@theme {
+  /* --- Couleurs : "Alabaster & Terracotta" — alabastre chaud / encre charbon, un seul accent --- */
+  --color-paper: #fbf9f5; /* fond principal (canvas alabastre) */
+  --color-paper-2: #f3efea; /* fond secondaire (limestone : cimaise, cadres) */
+  --color-ink: #23211e; /* texte principal (charcoal ink) */
+  --color-ink-2: #6e685f; /* texte secondaire (charcoal muted) */
+  --color-stone: #4a6163; /* métadonnées, labels (mineral slate) */
+  --color-line: #ddd5ca; /* filets 1px (border patina) */
+  --color-accent: #b85d36; /* terracotta : liens actifs, prix, focus */
+  --color-accent-hover: #a04e2b; /* terracotta assombri au survol */
+
+  /* --- Ombre ambiante : downlighting de vitrine, jamais de noir pur --- */
+  --shadow-ambient: 0 12px 32px -8px rgba(35, 33, 30, 0.08);
+
+  /* --- Typographie : 2 familles, pas une de plus --- */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-playfair), ui-serif, Georgia, serif;
+
+  /* Échelle fluide : 4 tailles "éditoriales" + l'échelle Tailwind par défaut */
+  --text-hero: clamp(3.25rem, 12vw, 11rem);
+  --text-hero--line-height: 0.86;
+  --text-hero--letter-spacing: -0.03em;
+
+  --text-title: clamp(2rem, 5vw, 4.5rem);
+  --text-title--line-height: 0.95;
+  --text-title--letter-spacing: -0.02em;
+
+  --text-lead: clamp(1.125rem, 1.6vw, 1.5rem);
+  --text-lead--line-height: 1.5;
+
+  --text-cartel: 0.6875rem;
+  --text-cartel--line-height: 1.2;
+  --text-cartel--letter-spacing: 0.14em;
+
+  /* --- Rythme --- */
+  --spacing-gutter: 1.25rem; /* px-gutter */
+  --spacing-section: 8rem; /* py-section */
+
+  /* --- Easings : partagés avec GSAP (voir src/lib/lib.js) --- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+}
+
+/* --- Utilitaires maison (Tailwind v4 : @utility) --- */
+
+/* Le "cartel" : petite typo de musée, utilisée partout pour les métadonnées */
+@utility cartel {
+  font-size: var(--text-cartel);
+  line-height: var(--text-cartel--line-height);
+  letter-spacing: var(--text-cartel--letter-spacing);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Lien souligné qui se dessine au survol */
+@utility link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s var(--ease-out-expo);
+
+  &:hover {
+    background-size: 100% 1px;
+  }
+}
