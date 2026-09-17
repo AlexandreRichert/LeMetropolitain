@@ -1,27 +1,15 @@
-/**
- * =============================================================================
- *  lib.js — point d'entrée UNIQUE de toute l'animation du site.
- * =============================================================================
- *  Règle : aucun composant n'importe `gsap` directement. Tout passe par ici.
- *  Bénéfices :
- *   - les durées / easings sont centralisés : on change le "feeling" du site
- *     en une ligne ;
- *   - chaque animation est une FONCTION PURE (element, options) -> timeline,
- *     donc réutilisable, testable, et nettoyable par useGSAP().
- *
- *  ⚠️ Ce fichier est "client only" : il touche au DOM. Il ne doit être importé
- *  que depuis des composants marqués "use client".
- * =============================================================================
- */
-
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-export { gsap, useGSAP }
+export { gsap, useGSAP, ScrollTrigger }
 
-/* -------------------------------------------------------------------------- */
-/*  1. Tokens d'animation (miroir des easings CSS de globals.css)              */
-/* -------------------------------------------------------------------------- */
+let isInitialized = false
+export function initGSAP() {
+  if (isInitialized) return
+  gsap.registerPlugin(useGSAP, ScrollTrigger)
+  isInitialized = true
+}
 
 export const EASE = {
   out: 'expo.out', // sorties longues, "premium"
@@ -38,11 +26,6 @@ export const DURATION = {
 export function prefersReducedMotion() {
   return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
-
-/* -------------------------------------------------------------------------- */
-/*  2. Le catalogue d'animations                                              */
-/*     Signature commune : (root, options) => gsap.timeline | gsap.tween       */
-/* -------------------------------------------------------------------------- */
 
 /** Compteur numérique. */
 export function countTo(el, { from = 0, to = 100, duration = 1.2, format = (v) => Math.round(v) } = {}) {

@@ -4,6 +4,7 @@ import "./globals.css";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import Cursor from "@/components/motion/Cursor";
+import SmoothScroll from "@/components/motion/SmoothScroll";
 import { SITE } from "@/lib/constants";
 
 const sans = Inter({ variable: "--font-inter", subsets: ["latin"] });
@@ -48,10 +49,12 @@ export default function RootLayout({ children }) {
           }}
         />
 
-        <Cursor />
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <SmoothScroll>
+          <Cursor />
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );
