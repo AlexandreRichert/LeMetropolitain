@@ -1,6 +1,7 @@
 import Container from "@/components/ui/Container";
 import Link from "@/components/ui/Link";
 import { SITE } from "@/lib/constants";
+import AuthButton from "./AuthButton";
 import Nav from "./Nav";
 import SearchBar from "./SearchBar";
 
@@ -17,8 +18,13 @@ export default function Header() {
 
         <Nav className="hidden md:flex" />
 
-        <div className="ml-auto flex items-center gap-3 md:gap-6">
+        <div className="ml-auto flex items-center gap-4 md:gap-8">
           <SearchBar />
+          <div
+            className="hidden h-6 w-px bg-line md:block"
+            aria-hidden="true"
+          />
+          <AuthButton />
         </div>
       </Container>
     </header>
