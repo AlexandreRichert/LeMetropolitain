@@ -25,10 +25,10 @@ export const PERIODS = [
 
 /* Choix pour la page accueil et évite les requêtes API */
 export const FEATURED_SLUGS = [
-  'starry-night',
-  'mona-lisa',
+  'the-last-supper',
+  'liberty-leading-the-people',
   'the-great-wave-off-kanagawa',
-  'girl-with-a-pearl-earring',
+  'the-raft-of-the-medusa',
   'the-birth-of-venus',
   'guernica',
 ]

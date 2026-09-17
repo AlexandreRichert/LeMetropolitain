@@ -1,5 +1,5 @@
-import ArtworkGrid from '@/components/artwork/ArtworkGrid'
 import Hero from '@/components/home/Hero'
+import HorizontalGallery from '@/components/home/HorizontalGallery'
 import Button from '@/components/ui/Button'
 import Section from '@/components/ui/Section'
 import { FEATURED_SLUGS, HERO_SLUG, SITE } from '@/lib/constants'
@@ -21,7 +21,7 @@ export default async function HomePage() {
     <>
       <Hero artwork={hero} />
 
-      <Section
+      <HorizontalGallery
         eyebrow='Sélection du conservateur'
         title='Six œuvres à ne pas manquer'
         action={
@@ -29,9 +29,8 @@ export default async function HomePage() {
             Toute la collection
           </Button>
         }
-      >
-        <ArtworkGrid artworks={featured} columns={3} priorityCount={3} />
-      </Section>
+        artworks={featured}
+      />
 
       <Section eyebrow='À propos' title='Un musée qui tient dans un onglet' className='bg-paper-2'>
         <div className='grid gap-12 md:grid-cols-2'>
