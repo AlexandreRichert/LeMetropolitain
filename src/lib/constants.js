@@ -10,6 +10,7 @@ export const SITE = {
 export const NAV = [
   { href: '/', label: 'Accueil' },
   { href: '/oeuvres', label: 'Œuvres' },
+  { href: '/billeterie', label: 'Billetterie' },
   { href: '/a-propos', label: 'À propos' },
 ]
 
@@ -33,3 +34,44 @@ export const FEATURED_SLUGS = [
 ]
 
 export const HERO_SLUG = 'starry-night'
+
+/* Billetterie : tarifs et options, facturés par visiteur */
+export const TICKETS = [
+  { id: 'plein', label: 'Tarif plein', price: 16, note: '18 – 64 ans' },
+  { id: 'reduit', label: 'Tarif réduit', price: 12, note: 'Étudiants, 65 ans et +' },
+  { id: 'jeune', label: 'Moins de 18 ans', price: 0, note: 'Sur présentation d\'une pièce d\'identité' },
+  {
+    id: 'groupe',
+    label: 'Tarif groupe',
+    price: 10,
+    note: 'Par personne',
+    minQuantity: 10,
+  },
+]
+
+export const OPTIONS = [
+  {
+    id: 'audioguide',
+    label: 'Audioguide',
+    price: 5,
+    note: 'Français, anglais, espagnol · par personne',
+  },
+  {
+    id: 'expo-temporaire',
+    label: 'Exposition temporaire',
+    price: 4,
+    note: 'Accès à l\'exposition en cours · par personne',
+  },
+  {
+    id: 'visite-guidee',
+    label: 'Visite guidée',
+    price: 8,
+    note: 'Groupe de 15 personnes max, 1 h 30 · par personne',
+  },
+  {
+    id: 'vestiaire',
+    label: 'Vestiaire',
+    price: 0,
+    note: 'Dépôt de sacs et manteaux · par personne',
+  },
+]
