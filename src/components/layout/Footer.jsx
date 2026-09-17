@@ -32,16 +32,6 @@ export default function Footer() {
             <li>1000 Fifth Avenue</li>
             <li>Ouvert du mardi au dimanche</li>
             <li>10 h – 17 h 30</li>
-            <li>
-              <a
-                href="https://api-museum.vercel.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link-underline"
-              >
-                Données : API Museum
-              </a>
-            </li>
           </ul>
         </div>
       </Container>
@@ -50,7 +40,6 @@ export default function Footer() {
         <p className="cartel text-paper/40">
           © {new Date().getFullYear()} {SITE.name}
         </p>
-        <p className="cartel text-paper/40">Projet étudiant — Next.js</p>
       </Container>
     </footer>
   );

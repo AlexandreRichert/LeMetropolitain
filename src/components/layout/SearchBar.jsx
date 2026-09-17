@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import ArtworkImage from "@/components/artwork/ArtworkImage";
 import Link from "@/components/ui/Link";
 
 function useHighlightedParts(text, term) {
@@ -126,15 +126,14 @@ export default function SearchBar() {
                   className="flex items-center gap-3 px-3 py-3 transition-colors hover:bg-paper-2"
                 >
                   <span className="relative h-12 w-12 shrink-0 overflow-hidden bg-paper-2">
-                    {artwork.image && (
-                      <Image
-                        src={artwork.image}
-                        alt=""
-                        fill
-                        sizes="48px"
-                        className="object-cover"
-                      />
-                    )}
+                    <ArtworkImage
+                      src={artwork.image}
+                      alt=""
+                      fill
+                      sizes="48px"
+                      className="object-cover"
+                      fallback={null}
+                    />
                   </span>
                   <span className="min-w-0">
                     <span className="block truncate font-display text-base leading-tight">

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import ArtworkImage from "@/components/artwork/ArtworkImage";
 import Link from "@/components/ui/Link";
 import { cn } from "@/lib/utils";
 
@@ -9,20 +9,15 @@ export default function ArtworkCard({ artwork, priority = false, className }) {
     <article className={cn("group", className)}>
       <Link href={`/oeuvres/${id}`} data-cursor="Voir" className="block">
         <div className="relative aspect-[4/5] overflow-hidden bg-paper-2">
-          {image ? (
-            <Image
-              src={image}
-              alt={title}
-              fill
-              priority={priority}
-              sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 90vw"
-              className="object-contain p-4 transition-transform duration-700 ease-out-expo group-hover:scale-[1.04] md:p-8"
-            />
-          ) : (
-            <span className="cartel absolute inset-0 grid place-items-center text-stone">
-              Image indisponible
-            </span>
-          )}
+          <ArtworkImage
+            src={image}
+            alt={title}
+            fill
+            preload={priority}
+            sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 90vw"
+            className="object-contain p-4 transition-transform duration-700 ease-out-expo group-hover:scale-[1.04] md:p-8"
+            wrapperClassName="absolute inset-0"
+          />
         </div>
 
         <div className="mt-4 border-t border-line pt-3">

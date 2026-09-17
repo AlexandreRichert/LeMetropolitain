@@ -18,8 +18,8 @@
   --color-ink-2: #6e685f; /* texte secondaire (charcoal muted) */
   --color-stone: #4a6163; /* métadonnées, labels (mineral slate) */
   --color-line: #ddd5ca; /* filets 1px (border patina) */
-  --color-accent: #b85d36; /* terracotta : liens actifs, prix, focus */
-  --color-accent-hover: #a04e2b; /* terracotta assombri au survol */
+  --color-accent: #a65431; /* terracotta : liens actifs, prix, focus (contraste AA 5.08:1 sur paper) */
+  --color-accent-hover: #8a4629; /* terracotta assombri au survol (contraste AA 6.68:1 sur paper) */
 
   /* --- Ombre ambiante : downlighting de vitrine, jamais de noir pur --- */
   --shadow-ambient: 0 12px 32px -8px rgba(35, 33, 30, 0.08);

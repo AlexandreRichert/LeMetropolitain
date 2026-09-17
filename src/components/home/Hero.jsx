@@ -1,4 +1,4 @@
-import Image from "next/image";
+import ArtworkImage from "@/components/artwork/ArtworkImage";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 
@@ -7,13 +7,14 @@ export default function Hero({ artwork }) {
     <section className="relative flex min-h-[88svh] items-end overflow-hidden pb-16 pt-24">
       {artwork?.imageLarge && (
         <div className="absolute inset-0 -z-10">
-          <Image
+          <ArtworkImage
             src={artwork.imageLarge}
             alt={artwork.title}
             fill
-            priority
+            preload
             sizes="100vw"
             className="object-cover opacity-25"
+            fallback={null}
           />
         </div>
       )}

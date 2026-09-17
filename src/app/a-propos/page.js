@@ -1,4 +1,4 @@
-import Image from "next/image";
+import ArtworkImage from "@/components/artwork/ArtworkImage";
 import Container from "@/components/ui/Container";
 import { SITE } from "@/lib/constants";
 import { getArtworks } from "@/lib/museum";
@@ -37,9 +37,9 @@ export default async function AboutPage() {
             <Figure artwork={imageLeft} priority />
             <div className="space-y-6 px-6 py-10 md:px-10 md:py-14">
               <p className="text-lead text-ink-2">
-                {SITE.name} n'a pas de guichet : c'est un projet étudiant qui
-                rend une sélection de chefs-d'œuvre explorable depuis un
-                navigateur, sans rien installer.
+                {SITE.name} n'a pas de guichet : c'est un site qui rend une
+                sélection de chefs-d'œuvre explorable depuis un navigateur, sans
+                rien installer.
               </p>
               <p className="text-lead text-ink-2">
                 L'API Museum expose déjà une sélection de tableaux via une API
@@ -96,20 +96,15 @@ export default async function AboutPage() {
 function Figure({ artwork, priority = false }) {
   return (
     <div className="relative aspect-[4/5] bg-paper-2">
-      {artwork?.image ? (
-        <Image
-          src={artwork.image}
-          alt={artwork.title}
-          fill
-          priority={priority}
-          sizes="(min-width: 768px) 50vw, 100vw"
-          className="object-cover"
-        />
-      ) : (
-        <span className="cartel absolute inset-0 grid place-items-center text-stone">
-          Image indisponible
-        </span>
-      )}
+      <ArtworkImage
+        src={artwork?.image}
+        alt={artwork?.title}
+        fill
+        preload={priority}
+        sizes="(min-width: 768px) 50vw, 100vw"
+        className="object-cover"
+        wrapperClassName="absolute inset-0"
+      />
     </div>
   );
 }

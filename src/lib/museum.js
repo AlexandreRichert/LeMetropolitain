@@ -9,18 +9,6 @@ const BASE = 'https://api-museum.vercel.app'
 const HOUR = 60 * 60
 const DAY = 24 * HOUR
 
-// Wikimedia n'accepte plus le hotlinking de miniatures qu'à ces largeurs
-// précises (toute autre valeur renvoie 400 "Use thumbnail sizes listed
-// on..."). Or les URLs de l'API Museum utilisent des largeurs arbitraires
-// (2560px, 2880px...) qui n'en font pas partie : on les réécrit ici.
-// Voir https://www.mediawiki.org/wiki/Manual:$wgThumbnailSteps
-const WIKIMEDIA_THUMB_WIDTH = 1920
-
-function fixWikimediaThumbWidth(url) {
-  if (!url) return url
-  return url.replace(/(\/wikipedia\/commons\/thumb\/.+\/)\d+px-([^/]+)$/, `$1${WIKIMEDIA_THUMB_WIDTH}px-$2`)
-}
-
 async function museumFetch(path, { revalidate = DAY } = {}) {
   try {
     const res = await fetch(`${BASE}${path}`, { next: { revalidate } })
@@ -34,7 +22,7 @@ async function museumFetch(path, { revalidate = DAY } = {}) {
 /** Forme unique manipulée par TOUS les composants du site. */
 export function normalize(o) {
   if (!o?.slug) return null
-  const image = fixWikimediaThumbWidth(o.image) || null
+  const image = o.image || null
   return {
     id: o.slug,
     title: o.title?.trim() || 'Œuvre sans titre',
@@ -49,7 +37,7 @@ export function normalize(o) {
     description: o.description || '',
     image,
     imageLarge: image,
-    gallery: (o.gallery ?? []).map(fixWikimediaThumbWidth),
+    gallery: o.gallery ?? [],
   }
 }
 
@@ -86,10 +74,7 @@ export async function getTypes() {
 }
 
 /**
- * Filtre une liste d'œuvres déjà en mémoire selon les mêmes critères que
- * <ArtworkFilters> (recherche, mouvement, technique, période). Partagée
- * entre le composant client (rendu de la grille) et la page serveur (compte
- * affiché à côté du titre) pour que les deux restent toujours identiques.
+ * Filtre une liste d'œuvres déjà en mémoire selon les mêmes critères que <ArtworkFilters>
  */
 export function filterArtworks(artworks, { query = '', movementValue = '', typeValue = '', periodValue = '' } = {}) {
   const q = query.trim().toLowerCase()

@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { useRef } from 'react'
 import { DURATION, EASE, gsap, useGSAP } from '@/lib/lib'
 import { useStore } from '@/lib/store'
@@ -12,6 +12,7 @@ export default function Template({ children }) {
   const panelsRef = useRef([])
   const preloaderRef = useRef([])
   const router = useRouter()
+  const pathname = usePathname()
   const {
     destinationUrl,
     setDestinationUrl,
@@ -47,7 +48,11 @@ export default function Template({ children }) {
       ease: EASE.inOut,
       stagger: 0.06,
     })
-  }, [])
+    // Dépend du pathname, pas du montage : app/template.js ne remonte que
+    // lorsque le PREMIER segment change (ex: / -> /oeuvres). Deux pages
+    // voisines (ex: deux œuvres via "Dans la même veine") gardent la même
+    // instance, donc un effet à deps [] ne rejouerait jamais l'entrée.
+  }, [pathname])
 
   useGSAP(() => {
     if (!isTransitionActive) return
