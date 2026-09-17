@@ -1,3 +1,4 @@
+import Reveal from "@/components/motion/Reveal";
 import { cn } from "@/lib/utils";
 import Container from "./Container";
 
@@ -24,13 +25,26 @@ export default function Section({
               headerClassName,
             )}
           >
-            <div className="max-w-3xl">
-              {eyebrow && <p className="cartel mb-6 text-stone">{eyebrow}</p>}
-              {title && <h2 className="text-title">{title}</h2>}
-              {intro && (
-                <p className="mt-6 max-w-xl text-lead text-ink-2">{intro}</p>
+            <Reveal className="max-w-3xl">
+              {eyebrow && (
+                <p className="cartel mb-6 text-stone" data-anim-item>
+                  {eyebrow}
+                </p>
               )}
-            </div>
+              {title && (
+                <h2 className="text-title" data-anim-item>
+                  {title}
+                </h2>
+              )}
+              {intro && (
+                <p
+                  className="mt-6 max-w-xl text-lead text-ink-2"
+                  data-anim-item
+                >
+                  {intro}
+                </p>
+              )}
+            </Reveal>
             {action && <div className="shrink-0">{action}</div>}
           </div>
         )}

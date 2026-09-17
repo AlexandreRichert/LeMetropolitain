@@ -1,4 +1,5 @@
 import ArtworkImage from "@/components/artwork/ArtworkImage";
+import Reveal from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 
@@ -20,27 +21,32 @@ export default function Hero({ artwork }) {
       )}
 
       <Container className="grid gap-10 lg:grid-cols-12 lg:items-end">
-        <div className="lg:col-span-8">
-          <p className="cartel mb-8 text-stone">
+        <Reveal as="div" animation="textReveal" className="lg:col-span-8">
+          <p className="cartel mb-8 text-stone" data-anim-item>
             Collection permanente · 5 000 ans de création
           </p>
-          <h1 className="text-hero">
+          <h1 className="text-hero" data-anim-item>
             Voir de
             <br />
             plus près
           </h1>
-        </div>
+        </Reveal>
 
-        <div className="lg:col-span-4">
-          <p className="text-lead text-ink-2">
+        <Reveal
+          as="div"
+          animation="fadeUp"
+          options={{ delay: 0.3 }}
+          className="lg:col-span-4"
+        >
+          <p className="text-lead text-ink-2" data-anim-item>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
             euismod, nunc ut aliquam aliquam, nunc nisl aliquet nunc, eget
             aliquam nisl nunc eget nunc.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3" data-anim-item>
             <Button href="/oeuvres">Explorer la collection</Button>
           </div>
-        </div>
+        </Reveal>
       </Container>
 
       {artwork && (

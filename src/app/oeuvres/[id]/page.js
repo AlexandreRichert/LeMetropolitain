@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import ArtworkGrid from "@/components/artwork/ArtworkGrid";
 import ArtworkImage from "@/components/artwork/ArtworkImage";
 import ArtworkMeta from "@/components/artwork/ArtworkMeta";
+import Reveal from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import Section from "@/components/ui/Section";
@@ -75,25 +76,34 @@ export default async function ArtworkPage({ params }) {
 
           {/* Colonne cartel */}
           <div className="lg:col-span-5">
-            <div>
-              <p className="cartel mb-6 text-stone">
+            <Reveal animation="textReveal">
+              <p className="cartel mb-6 text-stone" data-anim-item>
                 {artwork.movement}
                 {artwork.location && ` · ${artwork.location}`}
               </p>
-              <h1 className="text-title">{artwork.title}</h1>
-              <p className="mt-6 text-lead text-ink-2">
+              <h1 className="text-title" data-anim-item>
+                {artwork.title}
+              </h1>
+              <p className="mt-6 text-lead text-ink-2" data-anim-item>
                 {artwork.artist}
                 {artwork.date && `, ${artwork.date}`}
               </p>
-            </div>
+            </Reveal>
 
-            <div className="mt-10">
-              <div>
+            <Reveal
+              animation="fadeUp"
+              options={{ delay: 0.2 }}
+              className="mt-10"
+            >
+              <div data-anim-item>
                 <ArtworkMeta artwork={artwork} />
               </div>
 
               {paragraphs.length > 0 && (
-                <div className="mt-6 space-y-4 text-sm leading-relaxed text-ink-2">
+                <div
+                  className="mt-6 space-y-4 text-sm leading-relaxed text-ink-2"
+                  data-anim-item
+                >
                   {paragraphs.map((paragraph) => (
                     <p key={paragraph.slice(0, 40)}>{paragraph}</p>
                   ))}
@@ -101,13 +111,13 @@ export default async function ArtworkPage({ params }) {
               )}
 
               {artwork.locationLink && (
-                <div className="mt-10 flex flex-wrap gap-3">
+                <div className="mt-10 flex flex-wrap gap-3" data-anim-item>
                   <Button href={artwork.locationLink} external variant="ghost">
                     Voir le musée ↗
                   </Button>
                 </div>
               )}
-            </div>
+            </Reveal>
           </div>
         </Container>
       </article>

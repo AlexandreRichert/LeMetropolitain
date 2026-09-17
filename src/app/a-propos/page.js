@@ -1,4 +1,5 @@
 import ArtworkImage from "@/components/artwork/ArtworkImage";
+import Reveal from "@/components/motion/Reveal";
 import Container from "@/components/ui/Container";
 import { SITE } from "@/lib/constants";
 import { getArtworks } from "@/lib/museum";
@@ -22,16 +23,22 @@ export default async function AboutPage() {
     <section className="py-24">
       <Container>
         <div className="border border-line">
-          <div className="border-b border-line px-6 py-10 md:px-10 md:py-14">
-            <p className="cartel mb-6 text-stone">À propos</p>
-            <h1 className="text-hero">
+          <Reveal
+            as="div"
+            animation="textReveal"
+            className="border-b border-line px-6 py-10 md:px-10 md:py-14"
+          >
+            <p className="cartel mb-6 text-stone" data-anim-item>
+              À propos
+            </p>
+            <h1 className="text-hero" data-anim-item>
               Un musée né
               <br />
               pour être visité
               <br />
               de partout
             </h1>
-          </div>
+          </Reveal>
 
           <div className="grid md:grid-cols-2 md:divide-x md:divide-line">
             <Figure artwork={imageLeft} priority />
