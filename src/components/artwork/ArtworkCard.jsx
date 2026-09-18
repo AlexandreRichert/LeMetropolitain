@@ -1,4 +1,5 @@
 import ArtworkImage from "@/components/artwork/ArtworkImage";
+import FavoriteButton from "@/components/artwork/FavoriteButton";
 import Link from "@/components/ui/Link";
 import { cn } from "@/lib/utils";
 
@@ -6,7 +7,11 @@ export default function ArtworkCard({ artwork, priority = false, className }) {
   const { id, title, artist, date, image } = artwork;
 
   return (
-    <article className={cn("group", className)}>
+    <article className={cn("group relative", className)}>
+      <FavoriteButton
+        artwork={artwork}
+        className="absolute right-3 top-3 z-10"
+      />
       <Link href={`/oeuvres/${id}`} data-cursor="Voir" className="block">
         <div className="relative aspect-[4/5] overflow-hidden bg-paper-2">
           <ArtworkImage

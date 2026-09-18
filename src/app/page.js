@@ -23,7 +23,7 @@ export default async function HomePage() {
 
       <HorizontalGallery
         eyebrow='Sélection du conservateur'
-        title='Six œuvres à ne pas manquer'
+        title='Les œuvres à ne pas manquer'
         action={
           <Button href='/oeuvres' variant='outline'>
             Toute la collection

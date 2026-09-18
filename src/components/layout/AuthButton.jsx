@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Button from "@/components/ui/Button";
 import { signOut, useSession } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
+import { useFavoritesStore } from "@/stores/useFavoritesStore";
 
 export default function AuthButton({ className }) {
   const { data: session, isPending } = useSession();
@@ -28,6 +29,7 @@ export default function AuthButton({ className }) {
       className={className}
       onClick={async () => {
         await signOut();
+        useFavoritesStore.getState().reset();
         router.push("/");
         router.refresh();
       }}

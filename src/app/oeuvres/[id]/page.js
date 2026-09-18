@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import ArtworkGrid from "@/components/artwork/ArtworkGrid";
 import ArtworkImage from "@/components/artwork/ArtworkImage";
 import ArtworkMeta from "@/components/artwork/ArtworkMeta";
+import FavoriteButton from "@/components/artwork/FavoriteButton";
 import Reveal from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
@@ -81,9 +82,12 @@ export default async function ArtworkPage({ params }) {
                 {artwork.movement}
                 {artwork.location && ` · ${artwork.location}`}
               </p>
-              <h1 className="text-title" data-anim-item>
-                {artwork.title}
-              </h1>
+              <div className="flex items-start justify-between gap-4">
+                <h1 className="text-title" data-anim-item>
+                  {artwork.title}
+                </h1>
+                <FavoriteButton artwork={artwork} className="mt-1 shrink-0" />
+              </div>
               <p className="mt-6 text-lead text-ink-2" data-anim-item>
                 {artwork.artist}
                 {artwork.date && `, ${artwork.date}`}

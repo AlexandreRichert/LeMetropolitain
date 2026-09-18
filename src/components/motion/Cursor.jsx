@@ -26,6 +26,7 @@ export default function Cursor() {
       if (!target) return;
       const text = target.dataset?.cursor ?? "";
       label.current.textContent = text;
+      label.current.style.fontSize = text === "♥" ? "1.5rem" : "";
       gsap.to(dot.current, { scale: text ? 5 : 2.4, duration: 0.35 });
       gsap.to(label.current, { opacity: text ? 1 : 0, duration: 0.25 });
     };

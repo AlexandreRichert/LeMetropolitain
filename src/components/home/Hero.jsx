@@ -5,7 +5,7 @@ import Container from "@/components/ui/Container";
 
 export default function Hero({ artwork }) {
   return (
-    <section className="relative flex min-h-[88svh] items-end overflow-hidden pb-16 pt-24">
+    <section className="relative flex min-h-[88svh] items-end overflow-hidden pb-24 pt-24">
       {artwork?.imageLarge && (
         <div className="absolute inset-0 -z-10">
           <ArtworkImage
@@ -26,9 +26,9 @@ export default function Hero({ artwork }) {
             Collection permanente · 5 000 ans de création
           </p>
           <h1 className="text-hero" data-anim-item>
-            Voir de
+            Lorem 
             <br />
-            plus près
+            ipsum
           </h1>
         </Reveal>
 
@@ -49,11 +49,6 @@ export default function Hero({ artwork }) {
         </Reveal>
       </Container>
 
-      {artwork && (
-        <p className="cartel absolute bottom-6 right-5 hidden max-w-[14rem] text-right text-stone md:right-10 md:block">
-          {artwork.title} — {artwork.artist}
-        </p>
-      )}
     </section>
   );
 }

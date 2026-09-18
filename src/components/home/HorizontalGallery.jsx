@@ -25,7 +25,7 @@ export default function HorizontalGallery({ artworks = [], eyebrow, title, actio
   return (
     <section
       ref={sectionRef}
-      className='relative flex h-dvh flex-col overflow-hidden bg-paper-2 pt-10 pb-8 md:pt-14 md:pb-10'
+      className='relative flex h-dvh flex-col overflow-hidden bg-paper-2 pt-20 pb-16 md:pt-28 md:pb-20'
     >
       <Container className='shrink-0'>
         <div className='mb-8 flex flex-col gap-6 border-t border-line pt-6 md:flex-row md:items-end md:justify-between'>
