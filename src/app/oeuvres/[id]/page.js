@@ -75,53 +75,56 @@ export default async function ArtworkPage({ params }) {
             </div>
           </div>
 
-          {/* Colonne cartel */}
+          {/* Colonne cartel : un panneau clair, comme un cartel de musée
+              physique fixé au mur — indépendant de la couleur du mur. */}
           <div className="lg:col-span-5">
-            <Reveal animation="textReveal">
-              <p className="cartel mb-6 text-stone" data-anim-item>
-                {artwork.movement}
-                {artwork.location && ` · ${artwork.location}`}
-              </p>
-              <div className="flex items-start justify-between gap-4">
-                <h1 className="text-title" data-anim-item>
-                  {artwork.title}
-                </h1>
-                <FavoriteButton artwork={artwork} className="mt-1 shrink-0" />
-              </div>
-              <p className="mt-6 text-lead text-ink-2" data-anim-item>
-                {artwork.artist}
-                {artwork.date && `, ${artwork.date}`}
-              </p>
-            </Reveal>
-
-            <Reveal
-              animation="fadeUp"
-              options={{ delay: 0.2 }}
-              className="mt-10"
-            >
-              <div data-anim-item>
-                <ArtworkMeta artwork={artwork} />
-              </div>
-
-              {paragraphs.length > 0 && (
-                <div
-                  className="mt-6 space-y-4 text-sm leading-relaxed text-ink-2"
-                  data-anim-item
-                >
-                  {paragraphs.map((paragraph) => (
-                    <p key={paragraph.slice(0, 40)}>{paragraph}</p>
-                  ))}
+            <div className="info-panel border border-line bg-paper p-8 shadow-ambient md:p-10">
+              <Reveal animation="textReveal">
+                <p className="cartel mb-6 text-stone" data-anim-item>
+                  {artwork.movement}
+                  {artwork.location && ` · ${artwork.location}`}
+                </p>
+                <div className="flex items-start justify-between gap-4">
+                  <h1 className="text-title" data-anim-item>
+                    {artwork.title}
+                  </h1>
+                  <FavoriteButton artwork={artwork} className="mt-1 shrink-0" />
                 </div>
-              )}
+                <p className="mt-6 text-lead text-ink-2" data-anim-item>
+                  {artwork.artist}
+                  {artwork.date && `, ${artwork.date}`}
+                </p>
+              </Reveal>
 
-              {artwork.locationLink && (
-                <div className="mt-10 flex flex-wrap gap-3" data-anim-item>
-                  <Button href={artwork.locationLink} external variant="ghost">
-                    Voir le musée ↗
-                  </Button>
+              <Reveal
+                animation="fadeUp"
+                options={{ delay: 0.2 }}
+                className="mt-10"
+              >
+                <div data-anim-item>
+                  <ArtworkMeta artwork={artwork} />
                 </div>
-              )}
-            </Reveal>
+
+                {paragraphs.length > 0 && (
+                  <div
+                    className="mt-6 space-y-4 text-sm leading-relaxed text-ink-2"
+                    data-anim-item
+                  >
+                    {paragraphs.map((paragraph) => (
+                      <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+                    ))}
+                  </div>
+                )}
+
+                {artwork.locationLink && (
+                  <div className="mt-10 flex flex-wrap gap-3" data-anim-item>
+                    <Button href={artwork.locationLink} external variant="ghost">
+                      Voir le musée ↗
+                    </Button>
+                  </div>
+                )}
+              </Reveal>
+            </div>
           </div>
         </Container>
       </article>

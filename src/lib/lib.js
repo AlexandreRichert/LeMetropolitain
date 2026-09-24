@@ -23,6 +23,15 @@ export const DURATION = {
   slow: 1.4,
 }
 
+/* Séquence du hero (PaintReveal) : durées partagées ici plutôt que dans
+   PaintReveal.jsx ("use client"), qu'un composant serveur comme Hero.jsx
+   ne peut pas importer au-delà de son export par défaut. */
+export const PAINT_REVEAL = {
+  stroke: 2.2,
+  fade: 0.8,
+}
+export const PAINT_REVEAL_DURATION = PAINT_REVEAL.stroke + PAINT_REVEAL.fade
+
 export function prefersReducedMotion() {
   return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
