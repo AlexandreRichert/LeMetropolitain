@@ -110,3 +110,31 @@
     background-size: 100% 1px;
   }
 }
+
+/* Trame toile tendue — croisillon très discret, pour les formulaires
+   présentés comme une toile (voir src/components/auth/AuthCanvas.jsx). */
+@utility canvas-weave {
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      rgba(35, 33, 30, 0.035) 0,
+      rgba(35, 33, 30, 0.035) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(35, 33, 30, 0.035) 0,
+      rgba(35, 33, 30, 0.035) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+}
+
+/* Trait de pinceau (bord irrégulier) utilisé sous les champs de formulaire ;
+   se peint au focus via un utilitaire bg-[length:...] côté composant. */
+@utility brush-underline {
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 24' preserveAspectRatio='none'%3E%3Cpath d='M4,14 C20,6 34,18 50,10 C70,2 90,20 110,12 C130,4 150,18 170,10 C190,3 210,19 230,11 C250,5 265,15 296,9 L296,18 C270,24 250,14 230,20 C210,26 190,12 170,19 C150,25 130,11 110,21 C90,27 70,9 50,19 C34,25 20,15 4,22 Z' fill='%23a65431'/%3E%3C/svg%3E");
+}

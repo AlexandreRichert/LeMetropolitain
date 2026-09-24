@@ -3,7 +3,6 @@
 import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/lib";
 
-
 export default function Cursor() {
   const wrapper = useRef(null);
   const dot = useRef(null);
@@ -13,8 +12,14 @@ export default function Cursor() {
     // Pas de curseur custom sur écran tactile.
     if (window.matchMedia("(hover: none)").matches) return;
 
-    const xTo = gsap.quickTo(wrapper.current, "x", { duration: 0.45, ease: "power3.out" });
-    const yTo = gsap.quickTo(wrapper.current, "y", { duration: 0.45, ease: "power3.out" });
+    const xTo = gsap.quickTo(wrapper.current, "x", {
+      duration: 0.45,
+      ease: "power3.out",
+    });
+    const yTo = gsap.quickTo(wrapper.current, "y", {
+      duration: 0.45,
+      ease: "power3.out",
+    });
 
     const onMove = (e) => {
       xTo(e.clientX);
