@@ -1,18 +1,21 @@
 "use client";
 
-import { useCartStore } from "@/stores/useCartStore";
 import { formatPrice } from "@/lib/utils";
-
+import { useCartStore } from "@/stores/useCartStore";
 
 export default function TicketRow({ ticket }) {
   const quantity = useCartStore((s) => s.tickets[ticket.id] ?? 0);
   const increment = useCartStore((s) => s.increment);
   const decrement = useCartStore((s) => s.decrement);
 
-  const isBelowMinimum = ticket.minQuantity && quantity > 0 && quantity < ticket.minQuantity;
+  const isBelowMinimum =
+    ticket.minQuantity && quantity > 0 && quantity < ticket.minQuantity;
 
   return (
-    <div data-anim-item className="flex items-center justify-between gap-6 border-b border-line py-6">
+    <div
+      data-anim-item
+      className="flex items-center justify-between gap-6 border-b border-line py-6"
+    >
       <div>
         <h3 className="font-display text-2xl leading-none">{ticket.label}</h3>
         <p className="cartel mt-2 text-stone">
@@ -36,7 +39,9 @@ export default function TicketRow({ ticket }) {
         >
           −
         </button>
-        <span className="w-6 text-center font-display text-xl tabular-nums">{quantity}</span>
+        <span className="w-6 text-center font-display text-xl tabular-nums">
+          {quantity}
+        </span>
         <button
           type="button"
           onClick={() => increment(ticket.id)}

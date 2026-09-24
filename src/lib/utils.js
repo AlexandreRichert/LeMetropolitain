@@ -1,5 +1,5 @@
-import { clsx } from 'clsx'
-import { twMerge } from 'tailwind-merge'
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 /**
  * cn() concatène des classes et résout les conflits Tailwind.
@@ -7,22 +7,26 @@ import { twMerge } from 'tailwind-merge'
  * (ex: <Button className="w-full" /> doit pouvoir écraser le w-auto interne).
  */
 export function cn(...inputs) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export function formatPrice(value) {
-  return new Intl.NumberFormat('fr-FR', {
-    style: 'currency',
-    currency: 'EUR',
+  return new Intl.NumberFormat("fr-FR", {
+    style: "currency",
+    currency: "EUR",
     minimumFractionDigits: value % 1 === 0 ? 0 : 2,
-  }).format(value)
+  }).format(value);
 }
 
 export function plural(count, singular, pluralForm = `${singular}s`) {
-  return count > 1 ? pluralForm : singular
+  return count > 1 ? pluralForm : singular;
+}
+
+export function formatDate(value, options = { dateStyle: "long" }) {
+  return new Intl.DateTimeFormat("fr-FR", options).format(new Date(value));
 }
 
 /** Les champs texte de l'API Museum peuvent contenir du HTML : on le neutralise. */
-export function stripHtml(html = '') {
-  return html.replace(/<[^>]*>/g, '').trim()
+export function stripHtml(html = "") {
+  return html.replace(/<[^>]*>/g, "").trim();
 }

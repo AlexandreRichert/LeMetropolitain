@@ -1,7 +1,7 @@
 import Container from "@/components/ui/Container";
 import Link from "@/components/ui/Link";
 import { SITE } from "@/lib/constants";
-import AuthButton from "./AuthButton";
+import AccountMenu from "./AccountMenu";
 import Nav from "./Nav";
 import SearchBar from "./SearchBar";
 
@@ -24,7 +24,7 @@ export default function Header() {
             className="hidden h-6 w-px bg-line md:block"
             aria-hidden="true"
           />
-          <AuthButton />
+          <AccountMenu />
         </div>
       </Container>
     </header>

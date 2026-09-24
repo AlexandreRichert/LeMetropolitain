@@ -17,7 +17,8 @@ Site vitrine s'appuyant sur l'API publique du Metropolitan Museum of Art, réali
 - Liste des œuvres avec filtres actifs (mouvement, technique, période)
 - Page œuvre unique avec section d'œuvres similaires
 - Billetterie avec panier et total qui se met à jour en direct
-- Favoris (nécessite un compte), galerie dans "mon compte"
+- Favoris (nécessite un compte)
+- Mon compte : onglets Favoris / Réservations / Informations personnelles, avec désactivation de compte
 - Transition de page, animations de reveal, préloader
 
 ## Lancer le projet

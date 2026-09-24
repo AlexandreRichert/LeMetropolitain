@@ -1,21 +1,27 @@
 "use client";
 
-import { useRef } from "react";
+import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
 import Button from "@/components/ui/Button";
-import { getTotals, useCartStore } from "@/stores/useCartStore";
+import Link from "@/components/ui/Link";
+import { useSession } from "@/lib/auth-client";
 import { countTo, useGSAP } from "@/lib/lib";
 import { formatPrice, plural } from "@/lib/utils";
-
+import { getTotals, useCartStore } from "@/stores/useCartStore";
 
 export default function CartSidebar() {
+  const { data: session, isPending: isSessionPending } = useSession();
   const tickets = useCartStore((s) => s.tickets);
   const options = useCartStore((s) => s.options);
   const reset = useCartStore((s) => s.reset);
+  const router = useRouter();
+  const [status, setStatus] = useState("idle"); // idle | loading | success | error
 
-  const { ticketLines, optionLines, visitors, total, hasError, isEmpty } = getTotals({
-    tickets,
-    options,
-  });
+  const { ticketLines, optionLines, visitors, total, hasError, isEmpty } =
+    getTotals({
+      tickets,
+      options,
+    });
 
   const totalRef = useRef(null);
   const previous = useRef(0);
@@ -30,10 +36,29 @@ export default function CartSidebar() {
     previous.current = total;
   }, [total]);
 
+  async function reserve() {
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/reservations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tickets, options }),
+      });
+      if (!res.ok) throw new Error("reservation failed");
+      reset();
+      setStatus("success");
+      router.refresh();
+    } catch {
+      setStatus("error");
+    }
+  }
+
   return (
     <aside className="lg:sticky lg:top-28">
       <div className="border border-ink bg-paper-2 p-6">
-        <p className="cartel border-b border-line pb-4 text-stone">Votre visite</p>
+        <p className="cartel border-b border-line pb-4 text-stone">
+          Votre visite
+        </p>
 
         {isEmpty ? (
           <p className="py-8 text-sm text-ink-2">
@@ -42,12 +67,19 @@ export default function CartSidebar() {
         ) : (
           <ul className="divide-y divide-line py-2">
             {[...ticketLines, ...optionLines].map((line) => (
-              <li key={line.id} className="flex items-baseline justify-between gap-4 py-3">
+              <li
+                key={line.id}
+                className="flex items-baseline justify-between gap-4 py-3"
+              >
                 <span className="text-sm">
                   {line.label}
-                  <span className="cartel ml-2 text-stone">× {line.quantity}</span>
+                  <span className="cartel ml-2 text-stone">
+                    × {line.quantity}
+                  </span>
                 </span>
-                <span className="text-sm tabular-nums">{formatPrice(line.subtotal)}</span>
+                <span className="text-sm tabular-nums">
+                  {formatPrice(line.subtotal)}
+                </span>
               </li>
             ))}
           </ul>
@@ -69,16 +101,44 @@ export default function CartSidebar() {
             </p>
           )}
 
+          {!isEmpty && !isSessionPending && !session && (
+            <p className="cartel mt-3 text-stone">
+              <Link href="/connexion" className="link-underline text-accent">
+                Connectez-vous
+              </Link>{" "}
+              pour finaliser votre réservation.
+            </p>
+          )}
+
           <Button
             className="mt-6 w-full"
-            disabled={isEmpty || hasError}
-            onClick={() => alert("TODO : tunnel de paiement")}
+            disabled={isEmpty || hasError || !session || status === "loading"}
+            onClick={reserve}
           >
-            Réserver
+            {status === "loading" ? "Réservation…" : "Réserver"}
           </Button>
 
+          {status === "success" && (
+            <p className="cartel mt-3 text-accent">
+              Réservation confirmée ! Retrouvez-la dans{" "}
+              <Link href="/compte/reservations" className="link-underline">
+                votre compte
+              </Link>
+              .
+            </p>
+          )}
+          {status === "error" && (
+            <p className="cartel mt-3 text-accent">
+              Une erreur est survenue, merci de réessayer.
+            </p>
+          )}
+
           {!isEmpty && (
-            <button type="button" onClick={reset} className="cartel link-underline mt-4 text-stone">
+            <button
+              type="button"
+              onClick={reset}
+              className="cartel link-underline mt-4 text-stone"
+            >
               Vider la sélection
             </button>
           )}

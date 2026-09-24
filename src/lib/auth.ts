@@ -3,6 +3,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { APIError, createAuthMiddleware } from "better-auth/api";
 import { nextCookies } from "better-auth/next-js";
+import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import * as schema from "@/db/schema";
 import {
@@ -24,9 +25,37 @@ export const auth = betterAuth({
     minPasswordLength: PASSWORD_MIN_LENGTH,
     maxPasswordLength: PASSWORD_MAX_LENGTH,
   },
+  user: {
+    additionalFields: {
+      disabled: {
+        type: "boolean",
+        defaultValue: false,
+        input: false,
+      },
+    },
+  },
   plugins: [nextCookies()],
   hooks: {
     before: createAuthMiddleware(async (ctx) => {
+      if (ctx.path === "/sign-in/email") {
+        const email = ctx.body?.email;
+        if (typeof email === "string") {
+          const [existing] = await db
+            .select({ disabled: schema.user.disabled })
+            .from(schema.user)
+            .where(eq(schema.user.email, email))
+            .limit(1);
+
+          if (existing?.disabled) {
+            throw new APIError("FORBIDDEN", {
+              code: "ACCOUNT_DISABLED",
+              message: "Ce compte a été désactivé.",
+            });
+          }
+        }
+        return;
+      }
+
       const field = PASSWORD_FIELD_BY_PATH[ctx.path];
       if (!field) return;
 
