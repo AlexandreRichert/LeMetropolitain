@@ -4,7 +4,7 @@ import { getAllArtworks } from '@/lib/museum'
 export default async function sitemap() {
   const now = new Date()
 
-  const pages = ['', '/oeuvres'].map((path) => ({
+  const pages = ['', '/oeuvres', '/a-propos', '/billeterie'].map((path) => ({
     url: `${SITE.url}${path}`,
     lastModified: now,
     changeFrequency: 'weekly',
