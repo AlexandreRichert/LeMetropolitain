@@ -1,3 +1,4 @@
+import TicketQrCode from "@/components/compte/TicketQrCode";
 import { formatDate, formatPrice, plural } from "@/lib/utils";
 
 export default function ReservationTicketCard({ booking }) {
@@ -75,23 +76,7 @@ export default function ReservationTicketCard({ booking }) {
           <span className="absolute -top-0.5 -right-0.5 h-3.5 w-3.5 rounded-tr-sm border-r-2 border-t-2 border-accent" />
           <span className="absolute -bottom-0.5 -left-0.5 h-3.5 w-3.5 rounded-bl-sm border-b-2 border-l-2 border-accent" />
           <span className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-br-sm border-b-2 border-r-2 border-accent" />
-          <svg
-            viewBox="0 0 7 7"
-            width="38"
-            height="38"
-            aria-hidden="true"
-            className="text-ink"
-          >
-            <rect x="0" y="0" width="2" height="2" fill="currentColor" />
-            <rect x="5" y="0" width="2" height="2" fill="currentColor" />
-            <rect x="0" y="5" width="2" height="2" fill="currentColor" />
-            <rect x="3" y="1" width="1" height="1" fill="currentColor" />
-            <rect x="3" y="3" width="1" height="1" fill="currentColor" />
-            <rect x="1" y="3" width="1" height="1" fill="currentColor" />
-            <rect x="5" y="3" width="1" height="1" fill="currentColor" />
-            <rect x="3" y="5" width="1" height="1" fill="currentColor" />
-            <rect x="6" y="6" width="1" height="1" fill="currentColor" />
-          </svg>
+          <TicketQrCode value={booking.id} />
         </div>
 
         <p className="hidden max-w-[9rem] cartel text-stone sm:block">
