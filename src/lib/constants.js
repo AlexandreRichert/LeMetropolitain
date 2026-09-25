@@ -2,7 +2,7 @@ export const SITE = {
   name: "Le Métropolitain",
   shortName: "MÉTROPOLITAIN",
   baseline: "Musée des beaux-arts",
-  url: "https://musee-metropolitain.vercel.app", // TODO: URL Vercel finale
+  url: "https://le-metropolitain.vercel.app",
   description:
     "Une quarantaine de chefs-d'œuvre qui ont marqué l'histoire de l'art, du Primitif flamand au Cubisme. Explorez chaque tableau en détail.",
 };
